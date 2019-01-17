@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  triangleType:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs8.10
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: 'arn:aws:iam::363657696971:role/service-role/knockknockrole'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /triangleType
+            Method: GET
+        Api2:
+          Type: Api
+          Properties:
+            Path: /triangleType
+            Method: GET
