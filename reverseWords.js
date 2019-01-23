@@ -1,13 +1,19 @@
 exports.handler = async (event, context) => {
-    let reversed = event.queryStringParameters.sentence;
-     
-    if (reversed) {
-        reversed = reversed.split("").reverse().join("").split(" ").reverse().join(" ");
+    let resp, code;
+    
+    if (event.queryStringParameters !== null && event.queryStringParameters !== undefined) {
+        resp = event.queryStringParameters.sentence;
+         
+        if (resp) {
+            resp = JSON.stringify(resp.split("").reverse().join("").split(" ").reverse().join(" "));
+        }
+    } else {
+        code = 400;
+        resp = "Error";
     }
-
      const response = {
         statusCode: 200,
-        body: JSON.stringify(reversed),
+        body: resp
     };
     return response;
 };
