@@ -1,12 +1,13 @@
 var cache = {};
-let code = 200, resp ;
+let code, resp ;
 
 exports.handler = async (event, context) => {
-    if (isNaN(event.queryStringParameters.n) || !isInt(event.queryStringParameters.n)) {
+    if (isNaN(event.queryStringParameters.n) || !this.isInt(event.queryStringParameters.n)) {
         code = 400;
         resp = JSON.stringify({"message":"The request is invalid."});
     } else {
-        resp = fibonacci(event.queryStringParameters.n);
+        resp = this.fibonacci(event.queryStringParameters.n);
+        code = 200;
     }
     
      const response = {
@@ -16,12 +17,12 @@ exports.handler = async (event, context) => {
     return response;
 };
 
-function isInt(value) {
+exports.isInt = function (value) {
   var x = parseFloat(value);
   return !isNaN(value) && (x | 0) === x;
 }
 
-function fibonacci(number) {
+exports.fibonacci = function (number) {
     if (number < 1)
         return 0;
 
@@ -31,7 +32,7 @@ function fibonacci(number) {
     if (number in cache)
         return cache[number];
     
-    var value = fibonacci(number- 1) + fibonacci(number - 2);
+    var value = this.fibonacci(number- 1) + this.fibonacci(number - 2);
         
     cache[number] = value;
 
